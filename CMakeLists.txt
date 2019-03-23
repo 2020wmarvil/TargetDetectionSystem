@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.0)
+project( Motion )
+find_package( OpenCV REQUIRED )
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+add_executable( BackgroundSubtraction background_subtraction.cpp )
+target_link_libraries( BackgroundSubtraction ${OpenCV_LIBS} )
+add_executable( OpticalFlow optical_flow.cpp )
+target_link_libraries( OpticalFlow ${OpenCV_LIBS} )
