@@ -17,8 +17,7 @@ string WIN_MOG2 = "MOG2";
 
 const int thresh = 50;
 
-int main()
-{
+int main() {
 	VideoCapture cap(1);
 
 	namedWindow(WIN_SRC, WINDOW_AUTOSIZE);
@@ -29,8 +28,7 @@ int main()
 	Ptr<BackgroundSubtractor> mog2 = createBackgroundSubtractorMOG2();
 
 	Mat frame, mog2Mask, mog2Thresh;
-	while (true)
-	{
+	while (true) {
 		cap >> frame;
 
 		if (frame.empty())
@@ -45,18 +43,16 @@ int main()
 		findContours(mog2Mask, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
 
 		double max_area = 0, max_i = -1;
-		for (int i = 0; i < contours.size(); i++)
-		{
+		for (int i=0; i<contours.size(); i++) {
 			double area = contourArea(contours[i]);
-			if (area > max_area)
-			{
+
+			if (area > max_area) {
 				max_area = area;
 				max_i = i;
 			}
 		}
 
-		if (max_i != -1)
-		{
+		if (max_i != -1) {
 			drawContours(frame, contours, max_i, Scalar(0, 0, 255), 2, LINE_8, hierarchy, 0);
 			rectangle(frame, boundingRect(contours[max_i]), Scalar(0, 255, 0));
 		}
@@ -64,8 +60,7 @@ int main()
 		imshow(WIN_SRC, frame);
 		imshow(WIN_MOG2, mog2Mask);
 
-		if (char key = waitKey(30) == 27)
-		{
+		if (char key = waitKey(30) == 27) {
 			break;
 		}
 	}
